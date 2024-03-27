@@ -1,0 +1,87 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Branef.Customers.Api", "Branef.Customers.Api\Branef.Customers.Api.csproj", "{1A34D9A7-A548-4782-B6CC-C56632A844ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Branef.Customers.Dtos", "Branef.Customers.Dtos\Branef.Customers.Dtos.csproj", "{BD961ABC-62F2-4F1F-8435-B3630F3BE437}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Branef.Framework", "Branef.Framework\Branef.Framework.csproj", "{F3191C6E-1F9A-4BFE-A1E1-82DA2C5B68CD}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B3BE5645-4CDC-4D62-BB60-067863F17CA0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Branef.Customers.Data", "Branef.Customers.Data\Branef.Customers.Data.csproj", "{71016D80-4959-4B63-BDD9-E1E1CD6E880D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Branef.Customers.Entities", "Branef.Customers.Entities\Branef.Customers.Entities.csproj", "{1AA4C2C4-D336-40D6-94E6-FB1B6084294D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Branef.Customers.Business", "Branef.Customers.Business\Branef.Customers.Business.csproj", "{F0FBD982-32E1-4D31-A565-4705A2999896}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{DE3862AB-0592-4E84-BC67-573D0A9FB8AF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{6BA246B9-2949-42AE-A6A2-08FEC523E999}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{184C5CA1-7321-40BB-9581-56302D993352}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{F54E56FC-4AFD-41A7-A358-47C1920C5A0C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logging", "Logging", "{789FF533-231A-4D93-99F4-F7BB3E735374}"
+	ProjectSection(SolutionItems) = preProject
+		Branef.Customers.Logging\Dockerfile = Branef.Customers.Logging\Dockerfile
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{50F5DC76-97E0-445D-B18B-DF670C3D8084}"
+	ProjectSection(SolutionItems) = preProject
+		Branef.Customers.Database\Dockerfile = Branef.Customers.Database\Dockerfile
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A34D9A7-A548-4782-B6CC-C56632A844ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A34D9A7-A548-4782-B6CC-C56632A844ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A34D9A7-A548-4782-B6CC-C56632A844ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A34D9A7-A548-4782-B6CC-C56632A844ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD961ABC-62F2-4F1F-8435-B3630F3BE437}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD961ABC-62F2-4F1F-8435-B3630F3BE437}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD961ABC-62F2-4F1F-8435-B3630F3BE437}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD961ABC-62F2-4F1F-8435-B3630F3BE437}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3191C6E-1F9A-4BFE-A1E1-82DA2C5B68CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3191C6E-1F9A-4BFE-A1E1-82DA2C5B68CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3191C6E-1F9A-4BFE-A1E1-82DA2C5B68CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3191C6E-1F9A-4BFE-A1E1-82DA2C5B68CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3BE5645-4CDC-4D62-BB60-067863F17CA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3BE5645-4CDC-4D62-BB60-067863F17CA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3BE5645-4CDC-4D62-BB60-067863F17CA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3BE5645-4CDC-4D62-BB60-067863F17CA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71016D80-4959-4B63-BDD9-E1E1CD6E880D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71016D80-4959-4B63-BDD9-E1E1CD6E880D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71016D80-4959-4B63-BDD9-E1E1CD6E880D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71016D80-4959-4B63-BDD9-E1E1CD6E880D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AA4C2C4-D336-40D6-94E6-FB1B6084294D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AA4C2C4-D336-40D6-94E6-FB1B6084294D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AA4C2C4-D336-40D6-94E6-FB1B6084294D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AA4C2C4-D336-40D6-94E6-FB1B6084294D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0FBD982-32E1-4D31-A565-4705A2999896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0FBD982-32E1-4D31-A565-4705A2999896}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0FBD982-32E1-4D31-A565-4705A2999896}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0FBD982-32E1-4D31-A565-4705A2999896}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1A34D9A7-A548-4782-B6CC-C56632A844ED} = {DE3862AB-0592-4E84-BC67-573D0A9FB8AF}
+		{BD961ABC-62F2-4F1F-8435-B3630F3BE437} = {6BA246B9-2949-42AE-A6A2-08FEC523E999}
+		{F3191C6E-1F9A-4BFE-A1E1-82DA2C5B68CD} = {F54E56FC-4AFD-41A7-A358-47C1920C5A0C}
+		{71016D80-4959-4B63-BDD9-E1E1CD6E880D} = {184C5CA1-7321-40BB-9581-56302D993352}
+		{1AA4C2C4-D336-40D6-94E6-FB1B6084294D} = {184C5CA1-7321-40BB-9581-56302D993352}
+		{F0FBD982-32E1-4D31-A565-4705A2999896} = {6BA246B9-2949-42AE-A6A2-08FEC523E999}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {787F13C0-34D1-4D1C-B7E1-97A38038A741}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  branef.customers.web:
+    depends_on:
+      branef.customers.api:
+        condition: service_started
+    ports:
+      - "55900:4200"
+    volumes:
+      - ./Branef.Customers.Web:/usr/local/app
+
+  branef.customers.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "55901:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

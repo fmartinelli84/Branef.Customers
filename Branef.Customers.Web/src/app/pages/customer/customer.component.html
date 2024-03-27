@@ -1,0 +1,44 @@
+<app-parent-route-container>
+
+  <div class="container mb-4">
+    <app-page-title>Clientes</app-page-title>
+
+    <div class="form-row">
+      <div class="col-md text-right">
+        <app-new-button [routerLink]="['/customers', 0, 'edit']">
+          Novo Cliente
+        </app-new-button>
+        <app-reload-button (click)="load()"></app-reload-button>
+      </div>
+    </div>
+  </div>
+  <app-not-found-message [items]="model"></app-not-found-message>
+
+  <table class="table table-striped" *ngIf="model?.length">
+    <thead>
+      <tr>
+        <th class="text-nowrap">Código</th>
+        <th class="text-nowrap">Nome</th>
+        <th class="text-nowrap">Porte</th>
+        <th class="text-nowrap" style="width: 10%;">Criado Em</th>
+        <th class="text-nowrap" style="width: 10%;">Modificado Em</th>
+        <th class="action-column">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of model">
+        <td>{{ customer.id | nullFormat }}</td>
+        <td>{{ customer.name | nullFormat }}</td>
+        <td>{{ customer.size | enumDisplayName: customerSize | nullFormat }}</td>
+        <td class="text-nowrap">{{ customer.createdAtDate | dateTimeFormat | nullFormat }}</td>
+        <td class="text-nowrap">{{ customer.modifiedAtDate | dateTimeFormat | nullFormat }}</td>
+        <td class="text-nowrap text-center">
+          <app-edit-button type="icon" [routerLink]="['/customers', customer.id, 'edit']">
+          </app-edit-button>
+          <app-delete-button type="icon" (click)="delete(customer.id)">
+          </app-delete-button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</app-parent-route-container>

@@ -1,0 +1,49 @@
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div class="container mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a
+           href="#"
+           [routerLink]="['/customers']">Clientes
+        </a>
+      </li>
+      <li class="breadcrumb-item active" *ngIf="!model.id">Novo Cliente</li>
+      <li class="breadcrumb-item active" *ngIf="model.id">Editar Cliente</li>
+    </ol>
+    <app-page-title *ngIf="!model.id">Novo Cliente</app-page-title>
+    <app-page-title *ngIf="model.id">Editar Cliente</app-page-title>
+
+    <div class="form-row">
+
+      <div class="col-2">
+        <app-input id="idTextbox"
+                   type="number"
+                   label="Código"
+                   formControlName="id">
+        </app-input>
+      </div>
+      <div class="col">
+        <app-input id="nameTextbox"
+                   type="text"
+                   label="Nome"
+                   formControlName="name"
+                   [required]="true"
+                   [maxlength]="256">
+        </app-input>
+      </div>
+      <div class="col">
+        <app-enum-input id="sizeDropdown"
+                        label="Porte"
+                        [enumType]="customerSize"
+                        formControlName="size"
+                        [required]="true">
+        </app-enum-input>
+      </div>
+    </div>
+
+    <div class="form-group text-right">
+      <app-back-button></app-back-button>
+      <app-save-button type="submit"></app-save-button>
+    </div>
+  </div>
+</form>

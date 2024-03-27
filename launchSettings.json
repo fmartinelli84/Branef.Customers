@@ -1,0 +1,18 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "branef.customers.api",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/swagger",
+      "serviceActions": {
+        "branef.customers.web": "StartWithoutDebugging",
+        "branef.customers.api": "StartDebugging",
+        "branef.customers.jobs": "StartDebugging",
+        "branef.customers.database": "StartWithoutDebugging",
+        "branef.customers.logging": "StartWithoutDebugging"
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+version: '3.4'
+
+services:
+  branef.customers.web:
+    depends_on:
+      branef.customers.api:
+        condition: service_healthy
+    image: ${DOCKER_REGISTRY-}branef-customers-web
+    build:
+      context: .
+      dockerfile: Branef.Customers.Web/Dockerfile
+
+  branef.customers.api:
+    depends_on:
+      branef.customers.database:
+        condition: service_healthy
+      branef.customers.logging:
+        condition: service_healthy
+    image: ${DOCKER_REGISTRY-}branef-customers-api
+    build:
+      context: .
+      dockerfile: Branef.Customers.Api/Dockerfile
+
+  branef.customers.logging:
+    image: ${DOCKER_REGISTRY-}branef-customers-logging
+    build:
+      context: .
+      dockerfile: Branef.Customers.Logging/Dockerfile
+    environment:
+      ACCEPT_EULA: "Y"
+    ports:
+      - "55903:80"
+    volumes:
+      - ${APPDATA}/branef/customers/logging:/data
+
+  branef.customers.database:
+    image: ${DOCKER_REGISTRY-}branef-customers-database
+    build:
+      context: .
+      dockerfile: Branef.Customers.Database/Dockerfile
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "d93@1FfF#9756"
+    ports:
+      - "1433:1433"
+    volumes:
+      - ${APPDATA}/branef/customers/database:/var/opt/mssql/data
