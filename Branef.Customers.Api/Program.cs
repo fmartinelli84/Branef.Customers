@@ -1,8 +1,10 @@
 using Branef.Customers.Business;
 using Branef.Customers.Data;
 using Branef.Framework.Api;
+using Branef.Framework.Data;
 using Branef.Framework.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureLogging();
 
 builder.Services.AddApi<CustomersDbContext>(builder.Configuration);
+builder.Services.AddMongoDbContext(builder.Configuration, connectionString => new CustomersMongoDbContext(connectionString));
 
 builder.Services.AddBusiness(builder.Configuration);
 

@@ -30,3 +30,9 @@ Obs, o primeiro acesso pode demorar alguns segundos, até a compilação ser con
   - **Database**: Customers
   - **User**: sa
   - **Password**: d93@1FfF#9756
+
+- **branef.customers.mongodb**: Banco de Dados MongoDB Community Server.
+  - **Server**: localhost:27017
+  - **Database**: Customers
+  - **User**: admin
+  - **Password**: d931FfF9756

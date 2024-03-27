@@ -8,14 +8,21 @@ using Branef.Framework.Processes;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using MongoDB.Driver;
+using MongoDB.Driver.Linq;
+using static MongoDB.Driver.WriteConcern;
+using IdentityModel;
 
 namespace Branef.Customers.Business
 {
     public class CustomerBusiness : BaseBusiness<CustomersDbContext>
     {
-        public CustomerBusiness(CustomersDbContext dbContext)
+        private readonly CustomersMongoDbContext mongoDbContext;
+
+        public CustomerBusiness(CustomersDbContext dbContext, CustomersMongoDbContext mongoDbContext)
             : base(dbContext)
         {
+            this.mongoDbContext = mongoDbContext;
         }
 
         public async Task<CustomerDto?> GetByIdAsync(long id)
@@ -30,10 +37,9 @@ namespace Branef.Customers.Business
 
         public async Task<List<CustomerDto>> GetAllAsync()
         {
-            var customers = await this.dbContext.Customers.AsExpandable()
-                .Select(Customer.ToFullDto)
-                .OrderBy(c => c.Id)
-                .ToListAsync();
+            var customers = await IAsyncCursorSourceExtensions.ToListAsync(
+                this.mongoDbContext.Customers().AsQueryable()
+                    .OrderBy(c => c.Id));
 
             return customers;
         }
@@ -48,26 +54,34 @@ namespace Branef.Customers.Business
 
             await this.dbContext.SaveChangesAsync();
 
-            customer.Id = newCustomer.Id;
+            customer = (await this.GetByIdAsync(newCustomer.Id))!;
 
-            return await this.GetByIdAsync(customer.Id);
+            await this.mongoDbContext.Customers().InsertOneAsync(customer);
+
+            return customer;
         }
 
-        public async Task<CustomerDto?> UpdateAsync(CustomerDto movement)
+        public async Task<CustomerDto?> UpdateAsync(CustomerDto customer)
         {
-            this.EnsureIsValid(movement);
+            this.EnsureIsValid(customer);
 
-            var currentMovement = await dbContext.Customers
-                .Where(m => m.Id == movement.Id)
+            var currentCustomer = await dbContext.Customers
+                .Where(m => m.Id == customer.Id)
                 .FirstOrDefaultAsync();
 
-            if (currentMovement != null)
+            if (currentCustomer != null)
             {
-                currentMovement.FromDto(movement, this.dbContext);
+                currentCustomer.FromDto(customer, this.dbContext);
 
                 await dbContext.SaveChangesAsync();
 
-                return await this.GetByIdAsync(movement.Id);
+                customer = (await this.GetByIdAsync(currentCustomer.Id))!;
+
+                await this.mongoDbContext.Customers().ReplaceOneAsync(
+                    Builders<CustomerDto>.Filter.Eq(c => c.Id, currentCustomer.Id),
+                    customer);
+
+                return customer;
             }
 
             return null;
@@ -86,6 +100,9 @@ namespace Branef.Customers.Business
                 this.dbContext.Customers.Remove(currentCustomer);
 
                 await this.dbContext.SaveChangesAsync();
+
+                await this.mongoDbContext.Customers().DeleteOneAsync(
+                    Builders<CustomerDto>.Filter.Eq(c => c.Id, currentCustomer.Id));
 
                 return customer;
             }

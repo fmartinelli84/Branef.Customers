@@ -35,6 +35,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{50
 		Branef.Customers.Database\Dockerfile = Branef.Customers.Database\Dockerfile
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDb", "MongoDb", "{B3D68974-E22F-4CC0-A3C0-6ECC894E2EF8}"
+	ProjectSection(SolutionItems) = preProject
+		Branef.Customers.MongoDb\Dockerfile = Branef.Customers.MongoDb\Dockerfile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

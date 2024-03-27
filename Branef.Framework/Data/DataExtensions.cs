@@ -43,5 +43,23 @@ namespace Branef.Framework.Data
 
             return services;
         }
+
+
+        public static IServiceCollection AddMongoDbContext<TMongoDbContext>(this IServiceCollection services, IConfiguration configuration, Func<string, TMongoDbContext> implementationFactory, string connectionName = "MongoDbConnection")
+            where TMongoDbContext : MongoDbContext
+        {
+            services.AddMongoDbContext<TMongoDbContext, TMongoDbContext>(configuration, implementationFactory, connectionName);
+
+            return services;
+        }
+
+        public static IServiceCollection AddMongoDbContext<TMongoDbContextService, TMongoDbContextImplementation>(this IServiceCollection services, IConfiguration configuration, Func<string, TMongoDbContextImplementation> implementationFactory, string connectionName = "MongoDbConnection")
+            where TMongoDbContextService : class
+            where TMongoDbContextImplementation : MongoDbContext, TMongoDbContextService
+        {
+            services.AddScoped<TMongoDbContextService, TMongoDbContextImplementation>(options => implementationFactory(configuration.GetConnectionString(connectionName)!));
+
+            return services;
+        }
     }
 }

@@ -12,9 +12,11 @@ services:
 
   branef.customers.api:
     depends_on:
+      branef.customers.logging:
+        condition: service_healthy
       branef.customers.database:
         condition: service_healthy
-      branef.customers.logging:
+      branef.customers.mongodb:
         condition: service_healthy
     image: ${DOCKER_REGISTRY-}branef-customers-api
     build:
@@ -45,3 +47,16 @@ services:
       - "1433:1433"
     volumes:
       - ${APPDATA}/branef/customers/database:/var/opt/mssql/data
+
+  branef.customers.mongodb:
+    image: ${DOCKER_REGISTRY-}branef.customers.mongodb
+    build:
+      context: .
+      dockerfile: Branef.Customers.MongoDb/Dockerfile
+    environment:
+      MONGODB_INITDB_ROOT_USERNAME: "admin"
+      MONGODB_INITDB_ROOT_PASSWORD: "d931FfF9756"
+    ports:
+      - "27017:27017"
+    volumes:
+      - ${APPDATA}/branef/customers/mongodb:/data/db
