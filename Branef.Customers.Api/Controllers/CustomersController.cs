@@ -1,6 +1,9 @@
 ﻿using Branef.Customers.Business;
 using Branef.Customers.Dtos;
+using Branef.Customers.Dtos.Commands;
+using Branef.Customers.Dtos.Queries;
 using Branef.Customers.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,42 +16,42 @@ namespace Branef.Customers.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CustomerDto?>> GetByIdAsync(
             [FromRoute] long id, 
-            [FromServices] CustomerBusiness customerBusiness)
+            [FromServices] IMediator mediator)
         {
-            return await customerBusiness.GetByIdAsync(id);
+            return await mediator.Send(new GetCustomerByIdQuery() { Id = id });
         }
 
         [HttpGet("")]
         public async Task<ActionResult<List<CustomerDto>>> GetAllAsync(
-            [FromServices] CustomerBusiness customerBusiness)
+            [FromServices] IMediator mediator)
         {
-            return await customerBusiness.GetAllAsync();
+            return await mediator.Send(new GetAllCustomersQuery());
         }
 
         [HttpPost("")]
         public async Task<ActionResult<CustomerDto?>> CreateAsync(
             [FromBody] CustomerDto customer,
-            [FromServices] CustomerBusiness customerBusiness)
+            [FromServices] IMediator mediator)
         {
-            return await customerBusiness.CreateAsync(customer);
+            return await mediator.Send(new CreateCustomerCommand() { Data = customer });
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<CustomerDto?>> UpdateAsync(
             [FromRoute] long id,
             [FromBody] CustomerDto customer,
-            [FromServices] CustomerBusiness customerBusiness)
+            [FromServices] IMediator mediator)
         {
             customer.Id = id;
-            return await customerBusiness.UpdateAsync(customer);
+            return await mediator.Send(new UpdateCustomerCommand() { Data = customer });
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<CustomerDto?>> DeleteAsync(
             [FromRoute] long id,
-            [FromServices] CustomerBusiness customerBusiness)
+            [FromServices] IMediator mediator)
         {
-            return await customerBusiness.DeleteAsync(id);
+            return await mediator.Send(new DeleteCustomerCommand() { Id = id });
         }
     }
 }

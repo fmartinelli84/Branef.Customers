@@ -6,6 +6,7 @@ using Branef.Framework.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 

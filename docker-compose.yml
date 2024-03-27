@@ -53,9 +53,9 @@ services:
     build:
       context: .
       dockerfile: Branef.Customers.MongoDb/Dockerfile
-    environment:
-      MONGODB_INITDB_ROOT_USERNAME: "admin"
-      MONGODB_INITDB_ROOT_PASSWORD: "d931FfF9756"
+    # environment:
+    #   MONGODB_INITDB_ROOT_USERNAME: "admin"
+    #   MONGODB_INITDB_ROOT_PASSWORD: "d931FfF9756"
     ports:
       - "27017:27017"
     volumes:

@@ -3,15 +3,10 @@ using Branef.Customers.Dtos;
 using Branef.Customers.Entities;
 using Branef.Framework.Data;
 using Branef.Framework.Exceptions;
-using Branef.Framework.Jobs;
-using Branef.Framework.Processes;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using static MongoDB.Driver.WriteConcern;
-using IdentityModel;
 
 namespace Branef.Customers.Business
 {
@@ -27,10 +22,9 @@ namespace Branef.Customers.Business
 
         public async Task<CustomerDto?> GetByIdAsync(long id)
         {
-            var customer = await this.dbContext.Customers.AsExpandable()
-                .Where(c => c.Id == id)
-                .Select(Customer.ToFullDto)
-                .FirstOrDefaultAsync();
+            var customer = await IAsyncCursorSourceExtensions.FirstOrDefaultAsync(
+                this.mongoDbContext.Customers().AsQueryable()
+                    .Where(c => c.Id == id));
 
             return customer;
         }
@@ -54,7 +48,7 @@ namespace Branef.Customers.Business
 
             await this.dbContext.SaveChangesAsync();
 
-            customer = (await this.GetByIdAsync(newCustomer.Id))!;
+            customer = (await this.GetByIdFromDbContextAsync(newCustomer.Id))!;
 
             await this.mongoDbContext.Customers().InsertOneAsync(customer);
 
@@ -75,7 +69,7 @@ namespace Branef.Customers.Business
 
                 await dbContext.SaveChangesAsync();
 
-                customer = (await this.GetByIdAsync(currentCustomer.Id))!;
+                customer = (await this.GetByIdFromDbContextAsync(currentCustomer.Id))!;
 
                 await this.mongoDbContext.Customers().ReplaceOneAsync(
                     Builders<CustomerDto>.Filter.Eq(c => c.Id, currentCustomer.Id),
@@ -95,7 +89,7 @@ namespace Branef.Customers.Business
 
             if (currentCustomer != null)
             {
-                var customer = await this.GetByIdAsync(currentCustomer.Id);
+                var customer = await this.GetByIdFromDbContextAsync(currentCustomer.Id);
 
                 this.dbContext.Customers.Remove(currentCustomer);
 
@@ -117,6 +111,16 @@ namespace Branef.Customers.Business
 
             if (customer.Size != CustomerSize.Small && customer.Size != CustomerSize.Medium && customer.Size != CustomerSize.Big)
                 throw new BusinessException("Size must be Small (1), Medium (2) or Big (3).");
+        }
+
+        private async Task<CustomerDto?> GetByIdFromDbContextAsync(long id)
+        {
+            var customer = await this.dbContext.Customers.AsExpandable()
+                .Where(c => c.Id == id)
+                .Select(Customer.ToFullDto)
+                .FirstOrDefaultAsync();
+
+            return customer;
         }
     }
 }

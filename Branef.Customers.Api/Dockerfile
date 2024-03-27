@@ -26,7 +26,7 @@ WORKDIR /app
 
 RUN apt-get update 
 RUN apt-get --yes install curl
-HEALTHCHECK --interval=5s --timeout=10s --retries=3 CMD curl "http://localhost/healthz" --fail --show-error --silent || exit 1
+HEALTHCHECK --interval=10s --timeout=20s --retries=10 CMD curl "http://localhost/healthz" --fail --show-error --silent || exit 1
 
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Branef.Customers.Api.dll"]
